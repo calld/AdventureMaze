@@ -1,6 +1,8 @@
 Adventure Maze Generator for table top RPGs
 By: Devon Call
 
+AdventureMaze.jar holds complied version of code
+
 Current working main in src/ways/generator/MakeLevel.java
 uses commandline i/o:
 start up options:

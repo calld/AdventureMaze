@@ -59,3 +59,4 @@ test/
 **.jar
 **.wms
 !README.txt
+!AdventureMaze.jar
