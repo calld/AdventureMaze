@@ -60,3 +60,4 @@ test/
 **.wms
 !README.txt
 !AdventureMaze.jar
+!makefile
