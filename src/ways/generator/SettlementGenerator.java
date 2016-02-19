@@ -99,18 +99,19 @@ public class SettlementGenerator {
    }
    
    private static enum Prosperity{
-      Dirt(0), Poor(1), Moderate(2), Wealthy(3), Rich(4);
+      None(0), Inexpensive(1), Moderate(2), Expensive(3), VeryExpensive(4), Exorbitant(5);
       
       public static final Prosperity[] ALL;
       private int pos;
       
       static{
-         ALL = new Prosperity[5];
-         ALL[0] = Dirt;
-         ALL[1] = Poor;
+         ALL = new Prosperity[6];
+         ALL[0] = None;
+         ALL[1] = Inexpensive;
          ALL[2] = Moderate;
-         ALL[3] = Wealthy;
-         ALL[4] = Rich;
+         ALL[3] = Expensive;
+         ALL[4] = VeryExpensive;
+         ALL[5] = Exorbitant;
       }
       
       private Prosperity(int i){
@@ -631,7 +632,7 @@ public class SettlementGenerator {
       desc = "This settlement is near to " + LANDMARKPRE[ran.nextInt(LANDMARKPRE.length)] + LANDMARKSUF[ran.nextInt(LANDMARKSUF.length)];
       //generate name and desc
       Settlement s = new Settlement(name, desc, Stype.Village);
-      s.setProsperity(Prosperity.Poor);
+      s.setProsperity(Prosperity.Inexpensive);
       s.setPopulation(Population.Steady);
       s.setDefense(Defense.Militia);
       List<String> temp = new LinkedList<String>();
@@ -965,7 +966,7 @@ public class SettlementGenerator {
       name = newName(ran);
       desc = "This settlement is near to " + LANDMARKPRE[ran.nextInt(LANDMARKPRE.length)] + LANDMARKSUF[ran.nextInt(LANDMARKSUF.length)];
       Settlement s = new Settlement(name, desc, Stype.Fort);
-      s.setProsperity(Prosperity.Poor);
+      s.setProsperity(Prosperity.Inexpensive);
       s.setPopulation(Population.Shrinking);
       s.setDefense(Defense.Guard);
       List<String> temp = new LinkedList<String>();
