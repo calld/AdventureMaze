@@ -47,7 +47,7 @@ Temporary Items
 .apdisk
 
 # ignore jGrasp metadata
-**.gpj
+# **.gpj
 
 # ignore other kinds of data
 **.class
