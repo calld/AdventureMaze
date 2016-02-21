@@ -671,6 +671,7 @@ public class SettlementGenerator {
                case 3:
                   temp.add("Personage(Arcane)");
                   temp.add("Arcane");
+				  break;
                default:
                   break;
             }         
@@ -818,6 +819,7 @@ public class SettlementGenerator {
                case 3:
                   temp.add("Personage(Arcane)");
                   temp.add("Arcane");
+				  break;
                default:
                   break;
             }         
@@ -1289,6 +1291,7 @@ public class SettlementGenerator {
                   temp.add("-Prosperity");
                   s.setProsperity(s.getProsperity().down());
                   s.setDefense(s.getDefense().up());
+				  break;
                default:
                   break;
             }
@@ -1336,6 +1339,7 @@ public class SettlementGenerator {
                   break;
                case 2:
                   temp.add("Art(Cuisine)");
+				  break;
                default:
                   break;
             }
@@ -1401,6 +1405,7 @@ public class SettlementGenerator {
             temp.add("Totalitarian");
             temp.add("-Prosperity");
             s.setProsperity(s.getProsperity().down());
+			break;
          default:
             break;
       }

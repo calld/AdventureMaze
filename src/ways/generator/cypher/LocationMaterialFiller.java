@@ -24,33 +24,35 @@ public class LocationMaterialFiller{
       switch(randomStep(ran) + mod){
          case 1://lvl 3
             f(place, mod + 1, materialTable, ran);
+			place.addItem(materialTable.get(0).get(ran.nextInt(materialTable.get(0).size())));
+			break;
          case 2:
             place.addItem(materialTable.get(0).get(ran.nextInt(materialTable.get(0).size())));
             break;
-         case 3://lvl 4
+         case 3: //lvl 4
             place.addItem(materialTable.get(1).get(ran.nextInt(materialTable.get(1).size())));
             break;
-         case 4://lvl 5
+         case 4: //lvl 5
             place.addItem(materialTable.get(2).get(ran.nextInt(materialTable.get(2).size())));
             break;
          case 5:
-         case 6://lvl 6
+         case 6: //lvl 6
             place.addItem(materialTable.get(3).get(ran.nextInt(materialTable.get(3).size())));
             break;
          case 7:
-         case 8://lvl 7
+         case 8: //lvl 7
             place.addItem(materialTable.get(4).get(ran.nextInt(materialTable.get(4).size())));
             break;
          case 9:
          case 10:
-         case 11:// lvl 8
+         case 11: // lvl 8
             place.addItem(materialTable.get(5).get(ran.nextInt(materialTable.get(5).size())));
             break;
          case 12:
-         case 13:// lvl 9
+         case 13: // lvl 9
             place.addItem(materialTable.get(6).get(ran.nextInt(materialTable.get(6).size())));
             break;
-         default://lvl 10
+         default: // lvl 10
             place.addItem(materialTable.get(7).get(ran.nextInt(materialTable.get(7).size())));
             break;
       }
