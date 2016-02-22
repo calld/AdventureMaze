@@ -53,6 +53,11 @@ public class WorldState{
 			loadElement(data.next(), data);
 		}
 		initElements();
+		map.sort((e1, e2) -> {
+			int a = Integer.parseInt(e1.getName().split(":", 2)[0]);
+			int b = Integer.parseInt(e2.getName().split(":", 2)[0]);
+			return a - b;
+		});
 	}
 	
 	protected void initElements(){
@@ -69,6 +74,7 @@ public class WorldState{
 				readContainer(data, info);
 				readLocation(data, info);
 				putElement(new LocationObj(info.name, info.desc, info.notes, info.contents, info.field[0], info.field[1], info.field[2], info.directions, info.passages));
+				map.add((Location) getElement(info.name));
 				break;
 			case "PasssageObj":
 				info = readElement(data);
@@ -380,6 +386,10 @@ public class WorldState{
 	
 	public Element getElement(String name){
 		return allElements.get(name);
+	}
+	
+	public List<Element> getAllElements(){
+		return new ArrayList<Element>(allElements.values());
 	}
 	
 	public void dropElement(String name){

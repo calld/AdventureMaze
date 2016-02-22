@@ -12,7 +12,6 @@ public abstract class ElementObj implements Element{
    private final String desc;
    private final String name;
    private List<String> notes;
-   private static HashMap<String, Element> allElements = new HashMap<String, Element>();
    
    //basic contructor template: returns null if name is taken
    /*public static ElementObj getNewElement(String name, String desc){
@@ -20,20 +19,11 @@ public abstract class ElementObj implements Element{
       return new ElementObj(name, desc);
    }*/
    
-   public static Element getElement(String name){
-      return allElements.get(name);
-   }
-   
-   public static void dropElement(String name){
-      allElements.put(name, null);
-   }
-   
    //game elements have an unchanging name and description set upon construction
    protected ElementObj(String name, String desc){
       this.name = name;
       this.desc = desc;
       this.notes = new LinkedList<String>();
-      allElements.put(name, this);
    }
    
    public String getName(){
@@ -97,15 +87,10 @@ public abstract class ElementObj implements Element{
    
    //save and load constructors and methods
    
-   public ElementObj(String name, String desc, List<String> notes) throws Exception{
+   public ElementObj(String name, String desc, List<String> notes){
       this.name = name;
       this.desc = desc;
       this.notes = new LinkedList<String>(notes);
-      if(allElements.get(name) == null){
-         allElements.put(name, this);
-      }else{
-         throw new Exception("Save File corrupted, more than one copy of " + name + ".");
-      } 
    }
    
    public String getSaveString(){
@@ -134,8 +119,8 @@ public abstract class ElementObj implements Element{
    }
    
    //beta version, once all sudo classes implemented allow for indifferent ordering
-   public static List<String> completeSave(){
-      List<Element> everything = new ArrayList<Element>(allElements.values());
+   public static List<String> completeSave(WorldState world){
+      List<Element> everything = world.getAllElements();
       List<String> sl = new ArrayList<String>();
       //get all items
       for(Element e: everything){

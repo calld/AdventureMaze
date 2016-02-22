@@ -9,11 +9,6 @@ public class BasicItem extends ElementObj implements Item{
    private double weight;
    private double size;
    
-   public static BasicItem getNewBasicItem(String name, String desc, double weight, double size){
-      if(getElement(name) != null){return null;}
-      return new BasicItem(name, desc, weight, size);
-   }
-   
    protected BasicItem(String name, String desc, double weight, double size){
       super(name, desc);
       this.weight = weight;

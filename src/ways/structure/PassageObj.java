@@ -9,11 +9,6 @@ import java.util.List;
 public class PassageObj extends ElementObj implements Passage{
    private Location destination;
    
-   public static PassageObj getNewPassage(String name, String desc, Location dest){
-      if(getElement(name) != null){return null;}
-      return new PassageObj(name, desc, dest);
-   }
-   
    protected PassageObj(String name, String desc, Location dest){
       super(name, desc);
       destination = dest;

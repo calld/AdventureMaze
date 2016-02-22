@@ -11,11 +11,6 @@ public class Group extends ElementObj implements Allied{
    private List<ways.structure.Character> members;
    private Location position;
    
-   public static Group getNewGroup(String name, String desc){
-      if(getElement(name) != null){return null;}
-      return new Group(name, desc);
-   }
-   
    protected Group(String name, String desc){
       super(name, desc);
       members = new ArrayList<ways.structure.Character>();

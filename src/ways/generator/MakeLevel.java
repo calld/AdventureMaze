@@ -74,9 +74,9 @@ public class MakeLevel{
             case "s":
             case "save":
                if(token.length >= 2){
-                  save(token[1]);
+                  save(token[1], world);
                }else{
-                  save(currentsavename);
+                  save(currentsavename, world);
                }
                break;
             //change passages case
@@ -96,14 +96,14 @@ public class MakeLevel{
          System.out.println(current);
          //System.out.print("cmd: ");
       }
-      save(currentsavename);
+      save(currentsavename, world);
    }
    
-   private static void save(String filename){
+   private static void save(String filename, WorldState world){
       try{
          Path newSave = Paths.get(filename);
          Files.deleteIfExists(newSave);
-         Files.write(newSave, ElementObj.completeSave(), Charset.forName("UTF-8"));
+         Files.write(newSave, ElementObj.completeSave(world), Charset.forName("UTF-8"));
          currentsavename = filename;
       }catch(Exception e){
          e.printStackTrace(System.err);

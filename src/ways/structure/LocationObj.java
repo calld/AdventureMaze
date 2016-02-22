@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import ways.structure.save.SudoPassage;
 
 public class LocationObj extends ContainerObj implements Location {
    private Group danger;
@@ -18,11 +17,6 @@ public class LocationObj extends ContainerObj implements Location {
    private double width;
    private Faction fac;
    private Season season;
-   
-   public static Location getNewLocation(String name, String desc, double length, double width, Season season){
-      if(getElement(name) != null){return null;}
-      return new LocationObj(name, desc, length, width, season);
-   }
       
    protected LocationObj(String name, String desc, double length, double width, Season season){
       super(name, desc, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);

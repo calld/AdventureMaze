@@ -9,11 +9,6 @@ public class Box extends ContainerObj implements Item{
    private double size;
    private double empty_weight;
    
-   public static Box getNewBox(String name, String desc, double sizelimit, double weightlimit, double size, double empty_weight){
-      if(getElement(name) != null){return null;}
-      return new Box(name, desc, sizelimit, weightlimit, size, empty_weight);
-   }
-   
    protected Box(String name, String desc, double sizelimit, double weightlimit, double size, double empty_weight){
       super(name, desc, sizelimit, weightlimit);
       this.size = size;

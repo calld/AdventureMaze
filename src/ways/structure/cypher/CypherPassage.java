@@ -10,11 +10,6 @@ import java.util.List;
 public class CypherPassage extends PassageObj implements CypherElement{
    private int diff;
    
-   public static CypherPassage getNewCypherPassage(String name, String desc, Location  loc, int diff){
-      if(getElement(name) != null){return null;}
-      return new CypherPassage(name, desc, loc, diff);
-   }
-   
    protected CypherPassage(String name, String desc, Location loc, int diff){
       super(name, desc, loc);
       this.diff = diff;

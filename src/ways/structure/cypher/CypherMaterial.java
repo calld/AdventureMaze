@@ -10,11 +10,6 @@ import java.util.List;
 public class CypherMaterial extends BasicItem implements CypherElement{
    private int level;
    
-   public static CypherMaterial getNewCypherMaterial(String name, String desc, int level){
-      if(getElement(name) != null){return null;}
-      return new CypherMaterial(name + "(" + Integer.toString(level) + ")", desc, level);
-   }
-   
    protected CypherMaterial(String name, String desc, int level){
       super(name, desc, 0.0, 0.0);
       this.level = level;

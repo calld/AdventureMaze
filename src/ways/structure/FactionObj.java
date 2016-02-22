@@ -11,11 +11,6 @@ public class FactionObj extends ElementObj implements Faction{
    private List<Faction> allies;
    private Demeanor dem;
    
-   public static FactionObj getNewFaction(String name, String desc, Demeanor dem){
-      if(getElement(name) != null){return null;}
-      return new FactionObj(name, desc, dem);
-   }
-   
    protected FactionObj(String name, String desc, Demeanor dem){
       super(name, desc);
       this.dem = dem;
