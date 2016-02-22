@@ -57,7 +57,7 @@ public class WorldState{
 
 	protected void initElements(){
 		for(Element e: allElements.values()){
-			System.out.println(e.getName() + " init");
+			//System.out.println(e.getName() + " init");
 			e.init(this);
 		}
 		map.sort((e1, e2) -> {
@@ -408,7 +408,7 @@ public class WorldState{
 
 	protected Element putElement(Element el){
 		allElements.put(el.getName(), el);
-		System.out.println(el.getName() + " created");
+		//System.out.println(el.getName() + " created");
 		return el;
 	}
 

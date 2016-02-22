@@ -164,7 +164,7 @@ public class LocationObj extends ContainerObj implements Location {
 			Iterator<String> directs = _dir.iterator();
 			for(String passage: _pas){
 				temp = directs.next();
-        System.out.println(temp + ": " + passage);
+        //System.out.println(temp + ": " + passage);
 				if(ws.getElement(passage) instanceof Passage){
 					passages.put(Direction.valueOf(temp.toUpperCase()), (Passage) ws.getElement(passage));
 				}
