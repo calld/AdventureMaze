@@ -23,6 +23,10 @@ public class CypherWorldState extends WorldState{
 		FieldRecord info;
 		switch(type){
 			case "CypherMaterial":
+				info = readElement(data);
+				readBasicItem(data, info);
+				readCypherMaterial(data, info);
+				putElement(new CypherMaterial(info.name, info.desc, info.notes, info.field[0]));
 				break;
 			case "Cypher":
 				break;
@@ -33,6 +37,21 @@ public class CypherWorldState extends WorldState{
 			default:
 				super.loadElement(type, data);
 				break;
+		}
+	}
+	
+	protected void readCypherMaterial(Scanner data, FieldRecord fr){
+		fr.b = true;
+		while(data.hasNext() && fr.b){
+			switch(data.next().toLowerCase()){
+				case "level":
+					fr.field[0] = data.next();
+					data.next();
+					fr.b = false;
+					break;
+				default:
+					break;
+			}
 		}
 	}
 	
