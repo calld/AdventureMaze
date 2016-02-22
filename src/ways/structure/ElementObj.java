@@ -158,4 +158,6 @@ public abstract class ElementObj implements Element{
       
       return sl;
    }
+   
+   public void init(WorldState ws){}
 }

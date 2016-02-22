@@ -82,4 +82,56 @@ public class Group extends ElementObj implements Allied{
       sb.append("\n");
       return sb.toString();
    }
+   
+   //load and save
+   
+   private String _fac;
+   private List<String> _chars;
+   private String _loc;
+   
+   protected Group(String name, String desc, List<String> notes, String faction, List<String> characters, String loc){
+	   super(name, desc, notes);
+	   members = new ArrayList<ways.structure.Character>();
+	   _fac = faction;
+	   _chars = characters;
+	   _loc = loc;
+   }
+   
+   public void init(WorldState ws){
+	   super.init(ws);
+	   if(_fac != null && _chars != null && _loc != null){
+		   if(ws.getElement(_fac) instanceof Faction){
+			   fac = (Faction) ws.getElement(_fac);
+		   }
+		   for(String name: _chars){
+			   if(ws.getElement(name) instanceof ways.structure.Character){
+				   members.add((ways.structure.Character) ws.getElement(name));
+			   }
+		   }
+		   if(ws.getElement(_loc) instanceof Location){
+			   position = (Location) ws.getElement(_loc);
+		   }
+		   _fac = null;
+		   _chars = null;
+		   _loc = null;
+	   }
+   }
+   
+   protected StringBuilder getSaveFields(){
+	   StringBuilder sb = super.getSaveFields();
+	   sb.append("<faction>");
+	   sb.append(fac.getName());
+	   sb.append("</faction>\n");
+	   sb.append("<members>");
+	   for(ways.structure.Character mem: members){
+		   sb.append("<member>");
+		   sb.append(mem.getName());
+		   sb.append("</member>\n");
+	   }
+	   sb.append("</members>\n");
+	   sb.append("<location>");
+	   sb.append(position.getName());
+	   sb.append("</location>\n");
+	   return sb;
+   }
 }

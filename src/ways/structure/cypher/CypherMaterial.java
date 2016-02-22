@@ -7,7 +7,7 @@ import ways.structure.BasicItem;
 import java.util.List;
 
 
-public class CypherMaterial extends BasicItem{
+public class CypherMaterial extends BasicItem implements CypherElement{
    private int level;
    
    public static CypherMaterial getNewCypherMaterial(String name, String desc, int level){

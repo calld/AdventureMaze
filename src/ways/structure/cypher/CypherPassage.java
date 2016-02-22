@@ -7,7 +7,7 @@ import ways.structure.PassageObj;
 import ways.structure.Location;
 import java.util.List;
 
-public class CypherPassage extends PassageObj{
+public class CypherPassage extends PassageObj implements CypherElement{
    private int diff;
    
    public static CypherPassage getNewCypherPassage(String name, String desc, Location  loc, int diff){
@@ -20,7 +20,7 @@ public class CypherPassage extends PassageObj{
       this.diff = diff;
    }
    
-   public int getDiff(){
+   public int getLevel(){
       return diff;
    }
    

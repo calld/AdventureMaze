@@ -33,14 +33,21 @@ public class PassageObj extends ElementObj implements Passage{
    
    //save/load functions
    
+   private String _dest;
+   
    public PassageObj(String name, String desc, List<String> notes, String dest) throws Exception{
       super(name, desc, notes);
-      Element temp = getElement(dest);
-      if(temp instanceof Location){
-         destination = (Location) temp;
-      }else{
-         throw new Exception("destination not found, " + dest);
-      }
+	  _dest = dest;
+   }
+   
+   public void init(WorldState ws){
+	   super.init(ws);
+	   if(_dest != null){
+		   if(ws.getElement(_dest) instanceof Location){
+			   destination = (Location) ws.getElement(_dest);
+		   }
+		   _dest = null;
+	   }
    }
    
    protected StringBuilder getSaveFields(){

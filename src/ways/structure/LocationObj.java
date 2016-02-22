@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import ways.structure.save.SudoPassage;
 
 public class LocationObj extends ContainerObj implements Location {
@@ -147,24 +148,36 @@ public class LocationObj extends ContainerObj implements Location {
    }
    
    //save/load functions
+   private List<String> _dir;
+   private List<String> _pas;
    
    public LocationObj(String name, String desc, List<String> notes, List<String> contents, String len, String wid, String season, List<String> direction, List<String> passage)throws Exception{
       super(name, desc, notes, contents, Double.toString(Double.POSITIVE_INFINITY), Double.toString(Double.POSITIVE_INFINITY));
       danger = null;
       travelers = new LinkedList<Group>();
       passages = new HashMap<Direction, Passage>();
-      for(int i = 0; i < direction.size(); i++){
-         Element temp = getElement(passage.get(i));
-         if(temp == null){
-            passages.put(Direction.valueOf(direction.get(i).toUpperCase()), new SudoPassage(passage.get(i)));
-         }else{
-            passages.put(Direction.valueOf(direction.get(i).toUpperCase()), (Passage) temp);
-         }         
-      }
+	  _dir = direction;
+	  _pas = passage;
       this.season = Season.valueOf(season.toUpperCase());
       length = Double.valueOf(len);
       width = Double.valueOf(wid);
       fac = null; 
+   }
+   
+   public void init(WorldState ws){
+	   super.init(ws);
+	   if(_dir != null && _pas != null){
+			String temp;
+			Iterator<String> directs = _dir.iterator();
+			for(String passage: _pas){
+				temp = directs.next();
+				if(ws.getElement(passage) instanceof Passage){
+					passages.put(Direction.valueOf(temp.toUpperCase()), (Passage) ws.getElement(passsage));
+				}
+			}
+			_dir = null;
+			_pas = null;
+	   }
    }
    
    protected StringBuilder getSaveFields(){

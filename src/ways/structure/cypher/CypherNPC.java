@@ -9,7 +9,7 @@ import ways.structure.Faction;
 import java.util.Set;
 import java.util.HashSet;
 
-public class CypherNPC extends Character{
+public class CypherNPC extends Character implements CypherElement{
    private int level;
    private int health;
    private int armor;
@@ -52,7 +52,7 @@ public class CypherNPC extends Character{
       return 0;
    }
    
-   public int getLvL(){
+   public int getLevel(){
       return level;
    }
    public int getHealth(){

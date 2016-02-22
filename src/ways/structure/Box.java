@@ -26,4 +26,23 @@ public class Box extends ContainerObj implements Item{
    public double getSize(){
       return size;
    }
+   
+   //load and save
+   
+   protected Box(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl, String size, String e_w){
+	   super(name, desc, notes, contents, sizel, weightl);
+	   this.size = Double.parseDouble(size);
+	   this.empty_weight = Double.parseDouble(e_w);
+   }
+   
+   protected StringBuilder getSaveFields(){
+	   StringBuilder sb = super.getSaveFields();
+	   sb.append("<size>");
+	   sb.append(size);
+	   sb.append("</size>\n");
+	   sb.append("<empty_weight>");
+	   sb.append(empty_weight);
+	   sb.append("</empty_weight>\n");
+	   return sb;
+   }
 }

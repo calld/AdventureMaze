@@ -13,4 +13,5 @@ public interface Element{
    List<String> getNotes();
    Element removeNote(int id);
    String getSaveString();
+   void init(WorldState ws);
 }

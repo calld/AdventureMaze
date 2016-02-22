@@ -76,4 +76,57 @@ public class FactionObj extends ElementObj implements Faction{
    public Demeanor getDemeanor(){
       return dem;
    }
+   
+   //load and save
+   List<String> _allies;
+   List<String> _enemies;
+   
+   protected FactionObj(String name, String desc, List<String> notes, String demen, List<String> enemies, List<String> allies){
+	   super(name, desc, notes);
+	   this.dem = Demeanor.valueOf(demen);
+	   this.enemies = new LinkedList<Faction>();
+       this.allies = new LinkedList<Faction>();
+	   _allies = allies;
+	   _enemies = enemies;
+   }
+   
+   public void init(WorldState ws){
+	   super.init(ws);
+	   if(_allies != null && _enemies != null){
+		   for(String ally: _allies){
+			   if(ws.getElement(ally) instanceof Faction){
+				   allies.add((Faction) ws.getElement(ally));
+			   }
+		   }
+		   for(String enemy: _enemies){
+			   if(ws.getElement(enemy) instanceof Faction){
+				   enemies.add((Faction) ws.getElement(enemy));
+			   }
+		   }
+		   _allies = null;
+		   _enemies = null;
+	   }
+   }
+   
+   protected StringBuilder getSaveFields(){
+	   StringBuilder sb = super.getSaveFields();
+	   sb.append("<demeanor>");
+	   sb.append(dem.toString());
+	   sb.append("</demeanor>\n");
+	   sb.append("<allies>");
+	   for(Faction ally: allies){
+		   sb.append("<ally>");
+		   sb.append(ally.getName());
+		   sb.append("</ally>\n");
+	   }
+	   sb.append("</allies>\n");
+	   sb.append("<enemies>");
+	   for(Faction enemy: enemies){
+		   sb.append("<enemy>");
+		   sb.append(enemy.getName());
+		   sb.append("</enemy>\n");
+	   }
+	   sb.append("</enemies>\n"); 
+	   return sb;
+   }
 }

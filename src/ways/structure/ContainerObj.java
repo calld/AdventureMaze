@@ -89,20 +89,27 @@ public abstract class ContainerObj extends ElementObj implements Container{
    
    //save/load functions
    
-   public ContainerObj(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl) throws Exception{
+   private List<String> content_names;
+   
+   public ContainerObj(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl){
       super(name, desc, notes);
       Element temp;
       this.contents = new LinkedList<Item>();
-      for(String s: contents){
-         temp = getElement(s);
-         if(temp instanceof Item){
-            this.contents.add((Item) temp);
-         }else{
-            throw new Exception("Item not found, " + s);
-         }
-      }
+	  content_names = contents;
       this.sizelimit = Double.parseDouble(sizel);
       this.weightlimit = Double.parseDouble(weightl);
+   }
+   
+   public void init(WorldState ws){
+	    super.init(ws);
+		if(content_names != null){
+			for(String name: content_names){
+				if(ws.getElement(name) instanceof Item){
+					contents.add((Item) ws.getElement(name));
+				}
+			}
+			content_names = null;
+		}
    }
    
    protected StringBuilder getSaveFields(){
