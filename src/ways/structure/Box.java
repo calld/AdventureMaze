@@ -3,6 +3,7 @@
 */
 
 package ways.structure;
+import java.util.List;
 
 public class Box extends ContainerObj implements Item{
    private double size;
@@ -29,7 +30,7 @@ public class Box extends ContainerObj implements Item{
    
    //load and save
    
-   protected Box(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl, String size, String e_w){
+   protected Box(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl, String size, String e_w) throws Exception{
 	   super(name, desc, notes, contents, sizel, weightl);
 	   this.size = Double.parseDouble(size);
 	   this.empty_weight = Double.parseDouble(e_w);

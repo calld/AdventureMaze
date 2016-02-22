@@ -89,7 +89,7 @@ public class Group extends ElementObj implements Allied{
    private List<String> _chars;
    private String _loc;
    
-   protected Group(String name, String desc, List<String> notes, String faction, List<String> characters, String loc){
+   protected Group(String name, String desc, List<String> notes, String faction, List<String> characters, String loc) throws Exception{
 	   super(name, desc, notes);
 	   members = new ArrayList<ways.structure.Character>();
 	   _fac = faction;

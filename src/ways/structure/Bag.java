@@ -3,6 +3,7 @@
 */
 
 package ways.structure;
+import java.util.List;
 
 public class Bag extends ContainerObj implements Item{
    private double empty_size;
@@ -29,7 +30,7 @@ public class Bag extends ContainerObj implements Item{
    
    //save and load
    
-   protected Bag(String name, String desc, List<String> notes, List<String> contents, String s_l, String w_l, String e_s, String e_w){
+   protected Bag(String name, String desc, List<String> notes, List<String> contents, String s_l, String w_l, String e_s, String e_w) throws Exception{
 	   super(name, desc, notes, contents, s_l, w_l);
 	   this.empty_size = Double.parseDouble(e_s);
 	   this.empty_weight = Double.parseDouble(e_w);

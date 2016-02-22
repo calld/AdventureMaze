@@ -172,7 +172,7 @@ public class LocationObj extends ContainerObj implements Location {
 			for(String passage: _pas){
 				temp = directs.next();
 				if(ws.getElement(passage) instanceof Passage){
-					passages.put(Direction.valueOf(temp.toUpperCase()), (Passage) ws.getElement(passsage));
+					passages.put(Direction.valueOf(temp.toUpperCase()), (Passage) ws.getElement(passage));
 				}
 			}
 			_dir = null;

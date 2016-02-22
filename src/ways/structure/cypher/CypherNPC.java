@@ -23,13 +23,8 @@ public class CypherNPC extends Character implements CypherElement{
    if an NPC is more dangerous for reasons other than level, health, damage, or armor, 
    */
    
-   public static CypherNPC getNewCypherNPC(String name, String desc, Faction fac, int level, int health, int armor, int damage, Distance movement, int difficulty){
-      if(getElement(name) != null){return null;}
-      return new CypherNPC(name, desc, fac, level, health, armor, damage, movement, difficulty);
-   }
-   
-   protected CypherNPC(String name, String desc, Faction fac, int level, int health, int armor, int damage, Distance movement, int difficulty){
-      super(name, desc, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, fac);
+   protected CypherNPC(String name, String desc, int level, int health, int armor, int damage, Distance movement, int difficulty){
+      super(name, desc, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
       this.level = level;
       this.health = health;
       this.armor = armor;
@@ -96,12 +91,5 @@ public class CypherNPC extends Character implements CypherElement{
       sb.append("\n");
       
       return sb.toString();
-   }
-   
-   private static int copycount = 0;
-   
-   public CypherNPC copy(){
-      copycount++;
-      return getNewCypherNPC(this.getName() + "(" + copycount + ")", this.getDesc(), this.getFaction(), level, health, armor, damage, movement, difficulty);
    }
 }

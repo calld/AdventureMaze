@@ -36,11 +36,11 @@ public class FactionObj extends ElementObj implements Faction{
    }
    
    public List<Faction> getEnemies(){
-      return new LinkedList(enemies);
+      return new LinkedList<Faction>(enemies);
    }
    
    public List<Faction> getAllies(){
-      return new LinkedList(allies);
+      return new LinkedList<Faction>(allies);
    }
    
    public Faction addEnemy(Faction f){
@@ -81,7 +81,7 @@ public class FactionObj extends ElementObj implements Faction{
    List<String> _allies;
    List<String> _enemies;
    
-   protected FactionObj(String name, String desc, List<String> notes, String demen, List<String> enemies, List<String> allies){
+   protected FactionObj(String name, String desc, List<String> notes, String demen, List<String> enemies, List<String> allies) throws Exception{
 	   super(name, desc, notes);
 	   this.dem = Demeanor.valueOf(demen);
 	   this.enemies = new LinkedList<Faction>();

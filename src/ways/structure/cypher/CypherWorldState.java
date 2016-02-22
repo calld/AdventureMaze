@@ -5,21 +5,23 @@
 package ways.structure.cypher;
 
 import ways.structure.WorldState;
+import ways.structure.Faction;
+import ways.structure.Location;
 import java.util.Scanner;
 
 public class CypherWorldState extends WorldState{
 	
 	public CypherWorldState(){}
 	
-	public CypherWorldState(Scanner data){
-		data.setDelimiter("[<>]");
+	public CypherWorldState(Scanner data) throws Exception{
+		data.useDelimiter("[<>]+");
 		while(data.hasNext()){
 			loadElement(data.next(), data);
 		}
 		initElements();
 	}
 	
-	protected void loadElement(String type, Scanner data){
+	protected void loadElement(String type, Scanner data) throws Exception{
 		FieldRecord info;
 		switch(type){
 			case "CypherMaterial":
@@ -78,7 +80,7 @@ public class CypherWorldState extends WorldState{
 	
 	public CypherNPC makeNewCypherNPC(String name, String desc, Faction fac, int level, int health, int armor, int damage, Distance movement, int difficulty){
 		if(check(name)){
-			return (CypherNPC) putElement(new CypherNPC(name, desc, fac, level, health, armor, damage, movement, difficulty));
+			return (CypherNPC) putElement(new CypherNPC(name, desc, level, health, armor, damage, movement, difficulty));
 		}
 		return null;
 	}

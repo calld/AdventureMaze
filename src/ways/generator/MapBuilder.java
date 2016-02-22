@@ -10,20 +10,19 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 import ways.structure.cypher.*;
-
 import ways.structure.*;
 
 public class MapBuilder{
 
-   public static Location[] build(int size, ContentGenerator lg, ContentGenerator pg, double max_size, double min_size){
-      Location[] places = new Location[size];
+   public static WorldState build(int size, ContentGenerator lg, ContentGenerator pg, double max_size, double min_size){
+      WorldState world = new CypherWorldState();
       Random ran = new Random();
       double len = dimGen(ran, max_size, min_size);
       double wid = dimGen(ran, max_size, min_size);
       Season s = Season.getSeason(ran.nextInt(4));
       lg.newContent(len, wid, s);
       for(int i = 0; i < size; i++){
-         while(null == (places[i] = LocationObj.getNewLocation(lg.getName(), lg.getDesc(), len, wid, s))){
+         while(null == (world.add(world.makeNewLocation(lg.getName(), lg.getDesc(), len, wid, s)))){
             lg.newContent(len, wid, s);
          }
          len = dimGen(ran, max_size, min_size);
@@ -36,40 +35,40 @@ public class MapBuilder{
       for(int i = 0; i < size; i++){
          dirs = Direction.getCardinalDirections();
          j = (i + size - 1) % size;
-         makePassage(places, pg, dirs, size, i, j, ran);
+         makePassage(world, pg, dirs, size, i, j, ran);
          
          j = (j + size - (randomStep(ran) % size)) % size;
-         makePassage(places, pg, dirs, size, i, j, ran);
+         makePassage(world, pg, dirs, size, i, j, ran);
          
          j = (i + randomStep(ran)) % size;
-         makePassage(places, pg, dirs, size, i, j, ran);
+         makePassage(world, pg, dirs, size, i, j, ran);
          
          j = (j + randomStep(ran)) % size;
-         makePassage(places, pg, dirs, size, i, j, ran);
+         makePassage(world, pg, dirs, size, i, j, ran);
       }
-      return places;
+      return world;
    }
    
-   public static Location[] changePassages(Location[] map, Random ran){
+   public static WorldState changePassages(WorldState world, Random ran){
       List<Direction> dirs;
       int j;
-      int size = map.length;
+      int size = world.mapSize();
       for(int i = 0; i < size; i++){
          dirs = Direction.getCardinalDirections();
          j = (i + size - 1) % size;
-         map[i].getPassage(dirs.remove(ran.nextInt(dirs.size()))).setDestination(map[j]);
+         world.get(i).getPassage(dirs.remove(ran.nextInt(dirs.size()))).setDestination(world.get(j));
          
          j = (j + size - (randomStep(ran) % size)) % size;
-         map[i].getPassage(dirs.remove(ran.nextInt(dirs.size()))).setDestination(map[j]);
+         world.get(i).getPassage(dirs.remove(ran.nextInt(dirs.size()))).setDestination(world.get(j));
          
          j = (i + randomStep(ran)) % size;
-         map[i].getPassage(dirs.remove(ran.nextInt(dirs.size()))).setDestination(map[j]);
+         world.get(i).getPassage(dirs.remove(ran.nextInt(dirs.size()))).setDestination(world.get(j));
          
          j = (j + randomStep(ran)) % size;
-         map[i].getPassage(dirs.remove(ran.nextInt(dirs.size()))).setDestination(map[j]);
+         world.get(i).getPassage(dirs.remove(ran.nextInt(dirs.size()))).setDestination(world.get(j));
       }
       
-      return map;
+      return world;
    }
    
    private static double dimGen(Random r, double max, double min){
@@ -86,14 +85,14 @@ public class MapBuilder{
       return i;
    }
    
-   private static void makePassage(Location[] places, ContentGenerator pg, List<Direction> dirs, int size, int i, int j, Random ran){
-      pg.newContent(places[j]);
-      Passage p = PassageObj.getNewPassage(pg.getName(), pg.getDesc(), places[j]);
+   private static void makePassage(WorldState world, ContentGenerator pg, List<Direction> dirs, int size, int i, int j, Random ran){
+      pg.newContent(world.get(j));
+      Passage p = world.makeNewPassage(pg.getName(), pg.getDesc(), world.get(j));
       Direction d = dirs.remove(ran.nextInt(dirs.size()));
-      places[i].addPassage(d, p);
+      world.get(i).addPassage(d, p);
    }
    
-   public static Location[] loadSave(String filename) throws FileNotFoundException, Exception{
+   /*public static Location[] loadSave(String filename) throws FileNotFoundException, Exception{
       
       Location[] map = new Location[1];
       List<Location> m = new ArrayList<Location>();
@@ -311,5 +310,5 @@ public class MapBuilder{
          }
       }
       new CypherMaterial(name, desc, notes, level);
-   }
+   }*/
 }

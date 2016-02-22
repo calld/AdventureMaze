@@ -5,6 +5,7 @@
 package ways.generator;
 
 import ways.structure.*;
+import ways.structure.cypher.*;
 import ways.generator.cypher.*;
 import java.util.Scanner;
 import java.io.File;
@@ -22,14 +23,14 @@ public class MakeLevel{
 
    public static void main(String[] args){
       Scanner scan = new Scanner(System.in);
-      Location[] map = initiate(scan);
+      WorldState world = initiate(scan);
       scan.useDelimiter("[\r\n]+");
       String input;
       String[] token;
-      Element current = map[0];
+      Element current = world.get(0);
       Element temp;
       int i;
-      System.out.println("Map Size: " + map.length);
+      System.out.println("Map Size: " + world.mapSize());
       System.out.println(current);
       //System.out.print("cmd: ");
       while(scan.hasNext()){
@@ -38,7 +39,7 @@ public class MakeLevel{
          switch(token[0].toLowerCase()){
             case "f":
             case "find":
-               temp = ElementObj.getElement(token[1]);
+               temp = world.getElement(token[1]);
                if(temp != null){
                   current = temp;
                }else{
@@ -49,7 +50,7 @@ public class MakeLevel{
             case "jump":
                try{
                   i = Integer.parseInt(token[1]);
-                  current = map[i - 1];
+                  current = world.get(i - 1);
                }catch(Exception e){
                   System.out.println("invalid number");
                }
@@ -80,13 +81,13 @@ public class MakeLevel{
                break;
             //change passages case
             case "change":
-               MapBuilder.changePassages(map, new Random());
+               MapBuilder.changePassages(world, new Random());
                break;
             case "tofile":
                if(token.length >= 2){
-                  makeReadable(map, token[1]);
+                  makeReadable(world, token[1]);
                }else{
-                  makeReadable(map, null);
+                  makeReadable(world, null);
                }
                break;
             default:
@@ -110,44 +111,43 @@ public class MakeLevel{
       }
    }
    
-   private static Location[] initiate(Scanner in){
-      Location[] map = null;
+   private static WorldState initiate(Scanner in){
+      WorldState world = null;
       String[] tokens;
       in.reset();
-      while(map == null && in.hasNext()){
+      while(world == null && in.hasNext()){
          switch (in.next().toLowerCase()){
             case "load":
                //System.out.print("Save File: ");
                try{
-                  map = loadSave(in.next());
+                  world = loadSave(in.next());
                }catch(Exception e){
                   System.err.println(e);
-                  map = null;
+                  world = null;
                }
                break;
             case "new":
                //System.out.print("Size: ");
                try{
-                  map = newMap(Integer.parseInt(in.next()));
+                  world = newWorld(Integer.parseInt(in.next()));
                }catch(Exception e){
                   System.err.println(e.getStackTrace());
-                  map = null;
+                  world = null;
                }
                break;
             default:
                break;
          }
       }
-      if(map == null){System.exit(0);}
-      return map;
+      if(world == null){System.exit(0);}
+      return world;
    }
    
-   private static Location[] loadSave(String filename) throws FileNotFoundException, Exception{
-      currentsavename = filename;
-      return MapBuilder.loadSave(filename);
+   private static WorldState loadSave(String filename) throws FileNotFoundException, Exception{
+	  return new WorldState(new Scanner(new File(filename)));
    }
    
-   private static Location[] newMap(int size){
+   /*private static Location[] newMap(int size){
       Location[] map;     
       //map = MapBuilder.build(20, new SimpleLocationGenerator(900.0, 8100.0), new SimplePassageGenerator(), 250.0, 20.0);
       map = MapBuilder.build(size, new RingNode(), new SubspacePassage(), 200.0, 200.0);
@@ -155,12 +155,20 @@ public class MakeLevel{
       SettlementGenerator.fill(map);
       currentsavename = "temp.ams";
       return map;
+   }*/
+   
+   private static WorldState newWorld(int size){
+	   WorldState world = MapBuilder.build(size, new RingNode(), new SubspacePassage(), 200.0, 200.0);
+	   LocationMaterialFiller.fill(world, MaterialBuilder.getMaterials((CypherWorldState) world));
+	   SettlementGenerator.fill(world);
+	   currentsavename = "temp.ams";
+	   return world;
    }
    
-   private static void makeReadable(Location[] map, String filename){
+   private static void makeReadable(WorldState world, String filename){
       List<String> ls = new ArrayList<String>();
       ls.add("file: " + currentsavename + "\n");
-      for(Location l: map){
+      for(Location l: world.getMap()){
          ls.add(l.toString());
       }
       if(filename == null){

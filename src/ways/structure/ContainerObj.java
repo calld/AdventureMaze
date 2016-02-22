@@ -91,7 +91,7 @@ public abstract class ContainerObj extends ElementObj implements Container{
    
    private List<String> content_names;
    
-   public ContainerObj(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl){
+   public ContainerObj(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl) throws Exception{
       super(name, desc, notes);
       Element temp;
       this.contents = new LinkedList<Item>();

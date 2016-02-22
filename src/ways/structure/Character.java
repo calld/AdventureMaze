@@ -3,6 +3,7 @@
 */
 
 package ways.structure;
+import java.util.List;
 
 public abstract class Character extends ContainerObj implements Allied{
    private Faction faction;
@@ -16,7 +17,7 @@ public abstract class Character extends ContainerObj implements Allied{
    
    public abstract int getExp();
    
-   public abstract int getLvL();
+   public abstract int getLevel();
    
    public Faction getFaction(){
       return faction;
@@ -57,7 +58,7 @@ public abstract class Character extends ContainerObj implements Allied{
    private String _fac;
    private String _grp;
    
-   protected Character(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl, String faction, String group){
+   protected Character(String name, String desc, List<String> notes, List<String> contents, String sizel, String weightl, String faction, String group) throws Exception{
 	   super(name, desc, notes, contents, sizel, weightl);
 	   _fac = faction;
 	   _grp = group;

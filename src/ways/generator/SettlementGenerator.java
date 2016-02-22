@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import ways.structure.Location;
+import ways.structure.WorldState;
 import java.util.Random;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -236,18 +237,18 @@ public class SettlementGenerator {
    
    //private enum
 
-   public static void fill(Location[] map){
-      Settlement[] listofsettle = new Settlement[map.length];
+   public static void fill(WorldState world){
+      Settlement[] listofsettle = new Settlement[world.mapSize()];
       Random ran = new Random();
-      for(int i = 0; i < map.length; i++){
+      for(int i = 0; i < world.mapSize(); i++){
          switch(MapBuilder.randomStep(ran)){
             case 1:
                listofsettle[i] = null;
-               map[i].addNote("No world connection");
+               world.get(i).addNote("No world connection");
                break;
             case 2:
                listofsettle[i] = null;
-               map[i].addNote("connects to unsettled land");
+               world.get(i).addNote("connects to unsettled land");
                break;
             case 3:
             case 4:
@@ -303,7 +304,7 @@ public class SettlementGenerator {
       
       for(int i = 0; i < listofsettle.length; i++){
          if(listofsettle[i] != null){
-            listofsettle[i].fillin(map[i]);
+            listofsettle[i].fillin(world.get(i));
          }
       }
    

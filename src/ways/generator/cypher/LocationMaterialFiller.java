@@ -8,16 +8,17 @@ import static ways.generator.MapBuilder.randomStep;
 import ways.structure.Location;
 import java.util.List;
 import java.util.Random;
+import ways.structure.WorldState;
 
 public class LocationMaterialFiller{
 
-   public static Location[] fill(Location[] map, List<List<Item>> materialTable){
+   public static WorldState fill(WorldState world, List<List<Item>> materialTable){
       Random ran = new Random();
       int i;
-      for(Location place: map){
+      for(Location place: world.getMap()){
          f(place, 0, materialTable, ran);
       }
-      return map;
+      return world;
    }
    
    private static void f(Location place, int mod, List<List<Item>> materialTable, Random ran){

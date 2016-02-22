@@ -27,10 +27,28 @@ public class WorldState{
 
 	private HashMap<String, Element> allElements = new HashMap<String, Element>();
 	
+	private List<Location> map = new ArrayList<Location>();
+	
+	public Location add(Location l){
+		map.add(l);
+		return l;
+	}
+	
+	public Location get(int i){
+		return map.get(i);
+	}
+	
+	public int mapSize(){
+		return map.size();
+	}
+	
+	public List<Location> getMap(){
+		return new ArrayList<Location>(map);
+	}
 	public WorldState(){}
 	
-	public WorldState(Scanner data){
-		data.setDelimiter("[<>]");
+	public WorldState(Scanner data) throws Exception{
+		data.useDelimiter("[<>]+");
 		while(data.hasNext()){
 			loadElement(data.next(), data);
 		}
@@ -43,41 +61,41 @@ public class WorldState{
 		}
 	}
 	
-	protected void loadElement(String type, Scanner data){
+	protected void loadElement(String type, Scanner data) throws Exception{
 		FieldRecord info;
 		switch(type){
 			case "LocationObj":
 				info = readElement(data);
 				readContainer(data, info);
 				readLocation(data, info);
-				putElement(new LocationObj(fr.name, fr.desc, fr.notes, fr.contents, fr.field[0], fr.field[1], fr.field[2], fr.directions, fr.passages));
+				putElement(new LocationObj(info.name, info.desc, info.notes, info.contents, info.field[0], info.field[1], info.field[2], info.directions, info.passages));
 				break;
 			case "PasssageObj":
 				info = readElement(data);
 				readPassage(data, info);
-				putElement(new PassageObj(fr.name, fr.desc, fr.notes, fr.field[0]));
+				putElement(new PassageObj(info.name, info.desc, info.notes, info.field[0]));
 				break;
 			case "BasicItem":
 				info = readElement(data);
 				readBasicItem(data, info);
-				putElement(new BasicItem(fr.name, fr.desc, fr.notes, fr.weightl, fr.sizel));
+				putElement(new BasicItem(info.name, info.desc, info.notes, info.weightl, info.sizel));
 				break;
 			case "Box":
 				info = readElement(data);
 				readContainer(data, info);
 				readBox(data, info);
-				putElement(new Box(fr.name, fr.desc, fr.notes, fr.contents, fr.sizel, fr.weightl, fr.field[0], fr.field[1]));
+				putElement(new Box(info.name, info.desc, info.notes, info.contents, info.sizel, info.weightl, info.field[0], info.field[1]));
 				break;
 			case "Bag":
 				info = readElement(data);
 				readContainer(data, info);
 				readBag(data, info);
-				putElement(new Bag(fr.name, fr.desc, fr.notes, fr.contents, fr.sizel, fr.weightl, fr.field[0], fr.field[1]);
+				putElement(new Bag(info.name, info.desc, info.notes, info.contents, info.sizel, info.weightl, info.field[0], info.field[1]));
 				break;
 			case "FactionObj":
 				info = readElement(data);
 				readFaction(data, info);
-				putElement(new FactionObj(fr.name, fr.desc, fr.notes, fr.field[0], fr.passages, fr.directions));
+				putElement(new FactionObj(info.name, info.desc, info.notes, info.field[0], info.passages, info.directions));
 				break;
 			case "Group":
 				info = readElement(data);
@@ -165,6 +183,7 @@ public class WorldState{
 								break;
 						}
 					}
+					break;
 				default:
 					break;
 			}
@@ -299,6 +318,7 @@ public class WorldState{
 								break;
 							case "/contents":
 								fr.b = false;
+								break;
 							default:
 								break;
 						}
@@ -345,6 +365,7 @@ public class WorldState{
 								break;
 							case "/notes":
 								fr.b = false;
+								break;
 							default:
 								break;
 						}
@@ -419,7 +440,7 @@ public class WorldState{
 	
 	public Faction makeNewFaction(String name, String desc, Demeanor dem){
 		if(check(name)){
-			return (Faciton) putElement(new Faction(name, desc, dem));
+			return (Faction) putElement(new FactionObj(name, desc, dem));
 		}
 		return null;
 	}
