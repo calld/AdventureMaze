@@ -17,7 +17,7 @@ public class LocationObj extends ContainerObj implements Location {
    private double width;
    private Faction fac;
    private Season season;
-      
+
    protected LocationObj(String name, String desc, double length, double width, Season season){
       super(name, desc, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
       danger = null;
@@ -28,37 +28,37 @@ public class LocationObj extends ContainerObj implements Location {
       this.fac = null;
       this.season = season;
    }
-   
+
    public List<Passage> getExits(){
       return new ArrayList<Passage>(passages.values());
    }
-   
+
    public Passage addPassage(Direction dir, Passage pas){
       return passages.put(dir, pas);
    }
-   
+
    public Passage getPassage(Direction dir){
       return passages.get(dir);
    }
-   
+
    public List<Group> getParties(){
       return new ArrayList<Group>(travelers);
    }
-   
+
    public void addParty(Group gr){
       gr.getLocation().removeParty(gr);
       gr.setLocation(this);
       travelers.add(gr);
    }
-   
+
    public void removeParty(Group gr){
       travelers.remove(gr);
    }
-   
+
    public Group getDanger(){
       return danger;
    }
-   
+
    public void setDanger(Group gr){
       if(danger != null){
          danger.setLocation(null);
@@ -66,23 +66,23 @@ public class LocationObj extends ContainerObj implements Location {
       gr.setLocation(this);
       danger = gr;
    }
-   
+
    public Faction getFaction(){
       return fac;
    }
-   
+
    public void setFaction(Faction f){
       fac = f;
    }
-   
+
    public Season getSeason(){
       return season;
    }
-   
+
    public void setSeason(Season s){
 	   season = s;
    }
-   
+
    public String getLongDesc(){
       StringBuilder sb = new StringBuilder();
       sb.append(super.getLongDesc());
@@ -132,19 +132,19 @@ public class LocationObj extends ContainerObj implements Location {
          sb.append(g.getName());
          sb.append(", ");
       }
-      if(travelers.size() > 0){  
+      if(travelers.size() > 0){
          sb.delete(sb.length() - 2, sb.length());
       }else{
          sb.append("</none>");
       }
       sb.append("\n");
-      return sb.toString();      
+      return sb.toString();
    }
-   
+
    //save/load functions
    private List<String> _dir;
    private List<String> _pas;
-   
+
    public LocationObj(String name, String desc, List<String> notes, List<String> contents, String len, String wid, String season, List<String> direction, List<String> passage)throws Exception{
       super(name, desc, notes, contents, Double.toString(Double.POSITIVE_INFINITY), Double.toString(Double.POSITIVE_INFINITY));
       danger = null;
@@ -155,25 +155,22 @@ public class LocationObj extends ContainerObj implements Location {
       this.season = Season.valueOf(season.toUpperCase());
       length = Double.valueOf(len);
       width = Double.valueOf(wid);
-      fac = null; 
+      fac = null;
    }
-   
+
    public void init(WorldState ws){
 	   super.init(ws);
-	   if(_dir != null && _pas != null){
 			String temp;
 			Iterator<String> directs = _dir.iterator();
 			for(String passage: _pas){
 				temp = directs.next();
+        System.out.println(temp + ": " + passage);
 				if(ws.getElement(passage) instanceof Passage){
 					passages.put(Direction.valueOf(temp.toUpperCase()), (Passage) ws.getElement(passage));
 				}
 			}
-			_dir = null;
-			_pas = null;
-	   }
    }
-   
+
    protected StringBuilder getSaveFields(){
       StringBuilder sb = super.getSaveFields();
       sb.append("<length>");

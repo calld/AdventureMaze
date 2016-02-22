@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class WorldState{
-	
+
 	protected class FieldRecord{
 		public String name;
 		public String desc;
@@ -21,51 +21,52 @@ public class WorldState{
 		public List<String> directions;
 		public String[] field = new String[6];
 		public boolean b;
-		
+
 		public FieldRecord(){}
 	}
 
 	private HashMap<String, Element> allElements = new HashMap<String, Element>();
-	
+
 	private List<Location> map = new ArrayList<Location>();
-	
+
 	public Location add(Location l){
 		map.add(l);
 		return l;
 	}
-	
+
 	public Location get(int i){
 		return map.get(i);
 	}
-	
+
 	public int mapSize(){
 		return map.size();
 	}
-	
+
 	public List<Location> getMap(){
 		return new ArrayList<Location>(map);
 	}
 	public WorldState(){}
-	
+
 	public WorldState(Scanner data) throws Exception{
 		data.useDelimiter("[<>]+");
 		while(data.hasNext()){
 			loadElement(data.next(), data);
 		}
 		initElements();
+	}
+
+	protected void initElements(){
+		for(Element e: allElements.values()){
+			System.out.println(e.getName() + " init");
+			e.init(this);
+		}
 		map.sort((e1, e2) -> {
 			int a = Integer.parseInt(e1.getName().split(":", 2)[0]);
 			int b = Integer.parseInt(e2.getName().split(":", 2)[0]);
 			return a - b;
 		});
 	}
-	
-	protected void initElements(){
-		for(Element e: allElements.values()){
-			e.init(this);
-		}
-	}
-	
+
 	protected void loadElement(String type, Scanner data) throws Exception{
 		FieldRecord info;
 		switch(type){
@@ -76,7 +77,7 @@ public class WorldState{
 				putElement(new LocationObj(info.name, info.desc, info.notes, info.contents, info.field[0], info.field[1], info.field[2], info.directions, info.passages));
 				map.add((Location) getElement(info.name));
 				break;
-			case "PasssageObj":
+			case "PassageObj":
 				info = readElement(data);
 				readPassage(data, info);
 				putElement(new PassageObj(info.name, info.desc, info.notes, info.field[0]));
@@ -112,7 +113,7 @@ public class WorldState{
 				break;
 		}
 	}
-	
+
 	protected void readGroup(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -148,7 +149,7 @@ public class WorldState{
 			}
 		}
 	}
-	
+
 	protected void readFaction(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -195,7 +196,7 @@ public class WorldState{
 			}
 		}
 	}
-	
+
 	protected void readBag(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -214,7 +215,7 @@ public class WorldState{
 			}
 		}
 	}
-	
+
 	protected void readBox(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -233,7 +234,7 @@ public class WorldState{
 			}
 		}
 	}
-	
+
 	protected void readBasicItem(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -245,13 +246,14 @@ public class WorldState{
 				case "size":
 					fr.sizel = data.next();
 					data.next();
+					fr.b = false;
 					break;
 				default:
 					break;
 			}
 		}
 	}
-	
+
 	protected void readPassage(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -266,7 +268,7 @@ public class WorldState{
 			}
 		}
 	}
-	
+
 	protected void readLocation(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -309,7 +311,7 @@ public class WorldState{
 			}
 		}
 	}
-	
+
 	protected void readContainer(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -345,7 +347,7 @@ public class WorldState{
 			}
 		}
 	}
-	
+
 	protected FieldRecord readElement(Scanner data){
 		FieldRecord fr = new FieldRecord();
 		fr.b = true;
@@ -383,84 +385,93 @@ public class WorldState{
 		}
 		return fr;
 	}
-	
+
+	public List<String> completeSave(){
+		List<String> sl = new ArrayList<String>();
+		for(Element e: allElements.values()){
+			sl.add(e.getSaveString());
+		}
+		return sl;
+	}
+
 	public Element getElement(String name){
 		return allElements.get(name);
 	}
-	
+
 	public List<Element> getAllElements(){
 		return new ArrayList<Element>(allElements.values());
 	}
-	
+
 	public void dropElement(String name){
 		allElements.put(name, null);
 	}
-	
+
 	protected Element putElement(Element el){
 		allElements.put(el.getName(), el);
+		System.out.println(el.getName() + " created");
 		return el;
 	}
-	
+
 	protected boolean check(String name){
 		return null == allElements.get(name);
 	}
-	
-	public String completeSave(){
+
+	/*public String completeSave(){
 		StringBuilder sb = new StringBuilder();
 		for(Element e: allElements.values()){
 			sb.append(e.getSaveString());
 		}
 		return sb.toString();
-	}
-	
+	}*/
+
 	public Passage makeNewPassage(String name, String desc, Location dest){
 		if(check(name)){
 			return (Passage) putElement(new PassageObj(name, desc, dest));
 		}
-		return null;		
+		return null;
 	}
-	
+
 	public Location makeNewLocation(String name, String desc, double length, double width, Season season){
 		if(check(name)){
 			return (Location) putElement(new LocationObj(name, desc, length, width, season));
 		}
 		return null;
 	}
-	
+
 	public Item makeNewItem(String name, String desc, double weight, double size){
 		if(check(name)){
 			return (Item) putElement(new BasicItem(name, desc, weight, size));
 		}
 		return null;
 	}
-	
+
 	public Box makeNewBox(String name, String desc, double sizelimit, double weightlimit, double size, double empty){
 		if(check(name)){
 			return (Box) putElement(new Box(name, desc, sizelimit, weightlimit, size, empty));
 		}
 		return null;
 	}
-	
+
 	public Bag makeNewBag(String name, String desc, double sizelimit, double weightlimit, double empty_s, double empty_w){
 		if(check(name)){
 			return (Bag) putElement(new Bag(name, desc, sizelimit, weightlimit, empty_s, empty_w));
 		}
 		return null;
 	}
-	
+
 	public Faction makeNewFaction(String name, String desc, Demeanor dem){
 		if(check(name)){
 			return (Faction) putElement(new FactionObj(name, desc, dem));
 		}
 		return null;
 	}
-	
+
 	public Group makeNewGroup(String name, String desc){
 		if(check(name)){
 			return (Group) putElement(new Group(name, desc));
 		}
 		return null;
 	}
-	
-	
+
+
 }

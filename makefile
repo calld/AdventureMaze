@@ -8,6 +8,10 @@ structure: classes/ways/structure/%.class
 
 generator: classes/ways/generator/%.class
 
+gency: classes/ways/generator/cypher/%.class
+
+strcy: class/ways/structure/cypher/%.class
+
 classes/%.class: src/%.java
 	$(CC) $(FLAGS) $<
 

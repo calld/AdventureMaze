@@ -12,32 +12,32 @@ public abstract class ElementObj implements Element{
    private final String desc;
    private final String name;
    private List<String> notes;
-   
+
    //basic contructor template: returns null if name is taken
    /*public static ElementObj getNewElement(String name, String desc){
       if(getElement(name) != null){return null;}
       return new ElementObj(name, desc);
    }*/
-   
+
    //game elements have an unchanging name and description set upon construction
    protected ElementObj(String name, String desc){
       this.name = name;
       this.desc = desc;
       this.notes = new LinkedList<String>();
    }
-   
+
    public String getName(){
       return name;
    }
-   
+
    /*public String getDescription(){
       return getLongDesc();
    }*/
-   
+
    public String getDesc(){
       return desc;
    }
-   
+
    public String getLongDesc(){
       StringBuilder sb = new StringBuilder();
       sb.append(desc);
@@ -55,51 +55,51 @@ public abstract class ElementObj implements Element{
       }
       return sb.toString();
    }
-   
+
    public String getShortDesc(){
       return desc;
    }
-   
+
    public Element addNote(String note){
       notes.add(note);
       return this;
    }
-   
+
    public Element removeNote(int id){
       notes.remove(id - 1);
       return this;
    }
-   
+
    public List<String> getNotes(){
       return new LinkedList<String>();
    }
-   
+
    public String toString(){
       return getName() + ":\n" + getLongDesc();
    }
-   
+
    public boolean equals(ElementObj other){
       if(other != null){
          return name.equals(other.name);
       }
       return false;
    }
-   
+
    //save and load constructors and methods
-   
+
    public ElementObj(String name, String desc, List<String> notes){
       this.name = name;
       this.desc = desc;
       this.notes = new LinkedList<String>(notes);
    }
-   
+
    public String getSaveString(){
       StringBuilder sb = getSaveFields();
       sb.insert(0, "<" + this.getClass().getSimpleName() + ">\n");
       sb.append("</" + this.getClass().getSimpleName() + ">");
       return sb.toString();
    }
-   
+
    protected StringBuilder getSaveFields(){
       StringBuilder sb = new StringBuilder();
       sb.append("<name>");
@@ -117,32 +117,6 @@ public abstract class ElementObj implements Element{
       sb.append("</notes>\n");
       return sb;
    }
-   
-   //beta version, once all sudo classes implemented allow for indifferent ordering
-   public static List<String> completeSave(WorldState world){
-      List<Element> everything = world.getAllElements();
-      List<String> sl = new ArrayList<String>();
-      //get all items
-      for(Element e: everything){
-         if(e instanceof Item){
-            sl.add(e.getSaveString());
-         }
-      }
-      //get all Locations
-      for(Element e: everything){
-         if(e instanceof Location){
-            sl.add(e.getSaveString());
-         }
-      }
-      //get all Passages
-      for(Element e: everything){
-         if(e instanceof Passage){
-            sl.add(e.getSaveString());
-         }
-      }
-      
-      return sl;
-   }
-   
+
    public void init(WorldState ws){}
 }

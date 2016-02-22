@@ -10,9 +10,9 @@ import ways.structure.Location;
 import java.util.Scanner;
 
 public class CypherWorldState extends WorldState{
-	
+
 	public CypherWorldState(){}
-	
+
 	public CypherWorldState(Scanner data) throws Exception{
 		data.useDelimiter("[<>]+");
 		while(data.hasNext()){
@@ -20,7 +20,7 @@ public class CypherWorldState extends WorldState{
 		}
 		initElements();
 	}
-	
+
 	protected void loadElement(String type, Scanner data) throws Exception{
 		FieldRecord info;
 		switch(type){
@@ -41,7 +41,7 @@ public class CypherWorldState extends WorldState{
 				break;
 		}
 	}
-	
+
 	protected void readCypherMaterial(Scanner data, FieldRecord fr){
 		fr.b = true;
 		while(data.hasNext() && fr.b){
@@ -56,28 +56,28 @@ public class CypherWorldState extends WorldState{
 			}
 		}
 	}
-	
+
 	public Cypher makeNewCypher(String name, String desc, int level){
 		if(check(name)){
 			return (Cypher) putElement(new Cypher(name, desc, level));
 		}
 		return null;
 	}
-	
+
 	public CypherMaterial makeNewCypherMaterial(String name, String desc, int level){
 		if(check(name)){
 			return (CypherMaterial) putElement(new CypherMaterial(name, desc, level));
 		}
 		return null;
 	}
-	
+
 	public CypherPassage makeNewCypherPassage(String name, String desc, Location dest, int level){
 		if(check(name)){
 			return (CypherPassage) putElement(new CypherPassage(name, desc, dest, level));
 		}
 		return null;
 	}
-	
+
 	public CypherNPC makeNewCypherNPC(String name, String desc, Faction fac, int level, int health, int armor, int damage, Distance movement, int difficulty){
 		if(check(name)){
 			return (CypherNPC) putElement(new CypherNPC(name, desc, level, health, armor, damage, movement, difficulty));

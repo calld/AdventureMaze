@@ -44,7 +44,7 @@ public class MakeLevel{
                   current = temp;
                }else{
                   System.out.println("Element not found");
-               }               
+               }
                break;
             case "j":
             case "jump":
@@ -69,7 +69,7 @@ public class MakeLevel{
                   System.out.println("invalid number");
                }
                break;
-               
+
             //save case
             case "s":
             case "save":
@@ -98,19 +98,20 @@ public class MakeLevel{
       }
       save(currentsavename, world);
    }
-   
+
    private static void save(String filename, WorldState world){
       try{
+         System.out.println("saving: " + filename);
          Path newSave = Paths.get(filename);
          Files.deleteIfExists(newSave);
-         Files.write(newSave, ElementObj.completeSave(world), Charset.forName("UTF-8"));
+         Files.write(newSave, world.completeSave(), Charset.forName("UTF-8"));
          currentsavename = filename;
       }catch(Exception e){
          e.printStackTrace(System.err);
          System.out.println("unable to save");
       }
    }
-   
+
    private static WorldState initiate(Scanner in){
       WorldState world = null;
       String[] tokens;
@@ -122,7 +123,7 @@ public class MakeLevel{
                try{
                   world = loadSave(in.next());
                }catch(Exception e){
-                  System.err.println(e);
+                  System.err.println(e.getStackTrace());
                   world = null;
                }
                break;
@@ -142,13 +143,14 @@ public class MakeLevel{
       if(world == null){System.exit(0);}
       return world;
    }
-   
+
    private static WorldState loadSave(String filename) throws FileNotFoundException, Exception{
-	  return new WorldState(new Scanner(new File(filename)));
+     currentsavename = filename;
+	   return new CypherWorldState(new Scanner(new File(filename)));
    }
-   
+
    /*private static Location[] newMap(int size){
-      Location[] map;     
+      Location[] map;
       //map = MapBuilder.build(20, new SimpleLocationGenerator(900.0, 8100.0), new SimplePassageGenerator(), 250.0, 20.0);
       map = MapBuilder.build(size, new RingNode(), new SubspacePassage(), 200.0, 200.0);
       LocationMaterialFiller.fill(map, MaterialBuilder.getMaterials());
@@ -156,7 +158,7 @@ public class MakeLevel{
       currentsavename = "temp.ams";
       return map;
    }*/
-   
+
    private static WorldState newWorld(int size){
 	   WorldState world = MapBuilder.build(size, new RingNode(), new SubspacePassage(), 200.0, 200.0);
 	   LocationMaterialFiller.fill(world, MaterialBuilder.getMaterials((CypherWorldState) world));
@@ -164,7 +166,7 @@ public class MakeLevel{
 	   currentsavename = "temp.ams";
 	   return world;
    }
-   
+
    private static void makeReadable(WorldState world, String filename){
       List<String> ls = new ArrayList<String>();
       ls.add("file: " + currentsavename + "\n");
