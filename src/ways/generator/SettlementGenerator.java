@@ -339,10 +339,10 @@ public class SettlementGenerator {
          indx = (i + j) % stlmnt.length;
          if(stlmnt[indx] != null && !oathrecord[i][indx] && OR(stlmnt[indx].getType(), types)){
             temp = new LinkedList<String>(Arrays.asList("Oath(" + stlmnt[indx].getName() + " at " + (indx + 1) + ")"));
-            if(stlmnt[i].getType() == Stype.Village && (stlmnt[indx].getType() == Stype.Fort || stlmnt[indx].getType() == Stype.City)){
+            if(stlmnt[i].getType() == Stype.Village && (stlmnt[indx].getType() == Stype.Fort)){
                temp.add("+Defense");
                stlmnt[i].setDefense(stlmnt[i].getDefense().up());
-            }else if(stlmnt[indx].getType() == Stype.Village && (stlmnt[i].getType() == Stype.Fort || stlmnt[i].getType() == Stype.City)){
+            }else if(stlmnt[indx].getType() == Stype.Village && (stlmnt[i].getType() == Stype.Fort)){
                temp.add("-Defense");
                stlmnt[i].setDefense(stlmnt[i].getDefense().down());
             }else if(stlmnt[i].getType() == Stype.Fort && stlmnt[indx].getType() == Stype.City){
@@ -353,7 +353,10 @@ public class SettlementGenerator {
                   temp.add("+Defense");
                   stlmnt[i].setDefense(stlmnt[i].getDefense().up());
                }
-            }
+            }else if(stlmnt[i].getType() == Stype.Village && stlmnt[indx].getType() == Stype.City){
+				temp.add("+Prosperity");
+				stlmnt[i].setProsperity(stlmnt[i].getProsperity().up());
+			}
             stlmnt[i].addTag(temp);
             
             temp = new LinkedList<String>(Arrays.asList("Oath(" + stlmnt[i].getName() + " at " + (i + 1) + ")"));
@@ -371,7 +374,10 @@ public class SettlementGenerator {
                   temp.add("+Defense");
                   stlmnt[i].setDefense(stlmnt[i].getDefense().up());
                }
-            }
+            }else if(stlmnt[indx].getType() == Stype.Village && stlmnt[i].getType() == Stype.City){
+				temp.add("+Prosperity");
+				stlmnt[indx].setProsperity(stlmnt[indx].getProsperity().up());
+			}
             stlmnt[indx].addTag(temp);
             
             oathrecord[i][indx] = true;
