@@ -3,6 +3,9 @@ CC = javac
 FLAGS = -d classes -sourcepath src -Xlint
 
 commandline: classes/ways/generator/*.class classes/ways/structure/*.class classes/ways/structure/cypher/*.class classes/ways/generator/cypher/*.class
+	echo Main-class: ways.generator.MakeLevel> tempManifest.txt
+	jar cfm AdventureMaze.jar tempManifest.txt -C classes .
+	rm tempManifest.txt
 	java -cp classes ways.generator.MakeLevel
 
 structure: classes/ways/structure/%.class
