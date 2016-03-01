@@ -48,11 +48,11 @@ public enum Terrain{
 			return Terrain.EDGE;
 		}
 		int[] updateTable = new int[]{0, 0, 0, 0, 0, 0, 0};
-		addArray(updateTable, this.adjacency);
-		addArray(updateTable, this.adjacency);
-		addArray(updateTable, this.adjacency);
 		for(Terrain temp: adj){
 			addArray(updateTable, temp.adjacency);
+		}
+		for(int i = 0; i < 7; i++){
+			updateTable[i] = updateTable[i] * this.adjacency[i];
 		}
 		for(int i = 1; i < 7; i++){
 			updateTable[i] += updateTable[i-1];
