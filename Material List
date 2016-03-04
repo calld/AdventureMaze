@@ -1,0 +1,72 @@
+//lvl 3 items
+"Temp Stat Pool (might)", "This material is used to supply a temporary status pool for might.", 3));
+"Temp Stat Pool (speed)", "This material is used to supply a temporary status pool for speed.", 3));
+"Temp Stat Pool (int)", "This material is used to supply a temporary status pool for intelligence.", 3));
+"General Antitoxin", "This material adds the property of nullifiing poisons", 3));
+"General Anesthetic", "material puts you to sleep", 3));
+"Poison", "material makes result toxic", 3));
+"Magic Detection Copper", "Copper attracted to sources of magic", 3));
+"Sealing Silver", "Silver that is very effective at sealing magic", 3));
+"Fire Resistant Hide", "hide that is resistant to high tempurature", 3));
+"Cold Resistant Hide", "hide that is resistant to cold tempurature", 3));
+"Magically Responsive Ink", "Ink that works well with magic", 3));
+"Long Lasting Parchmant", "A long lasting material that works well as a writing surface.", 3));
+"Living Clay", "Clay that makes flexibile pottery", 3));
+"Iron Wood", "Wood as hard as iron.", 3));
+//lvl 4 items
+l = materialTable.get(1);
+"Temp Stat Edge (might)", "This material gives a temporary edge in might", 4));
+"Temp Stat Edge (speed)", "This material gives a temporary edge in speed", 4));
+"Temp Stat Edge (int)", "This material gives a temporary edge in intelligence", 4));
+"Memory Alter", "This material effects memory", 4));
+"Recover Might", "restores might pool", 4));
+"Recover Speed", "restores speed pool", 4));
+"Recover Int", "restores intelligence pool", 4));
+"Steel Fiber", "super strong threads", 4));
+"Cold Iron", "Iron that destroys magic", 4));
+"Magnite", "metal with magical properties similar to magnetism. Magnite Forge: slag falls out", 4));
+"Entangled Dust", "material that can be effected and effect at a distance.", 4));
+
+//lvl 5 items
+l = materialTable.get(2);
+"Greater Poison", "very strong poison", 5));
+"Elemental Material (fire)", "This material can be used to inbue with fire", 5));
+"Elemental Material (water)", "This material can be used to inbue with water", 5));
+"Elemental Material (earth)", "This material can be used to inbue with earth", 5));
+"Elemental Material (air)", "This material can be used to inbue with air", 5));
+"Scaled Hide", "Hide that provides extra Armor", 5));
+"High Quality Meat", "This meat is a delicacy, Lots of people would trade anything for a taste.", 5));
+"Floating Wood", "Wood lighter than air", 5));
+
+//lvl 6 items
+l = materialTable.get(3);
+"Black Crystallized Emotion (apathy)", "solidified apathy", 6));
+"Yellow Crystallized Emotion (fear)", "solidified fear", 6));
+"Blue Crystalized Emotion (sadness)", "solidified sadness", 6));
+"Golden Apple", "can be eaten as an action to make a free recovery roll", 6));
+"Blood Iron", "Iron Ore formed from heoglobim", 6));
+
+//lvl 7 items
+l = materialTable.get(4);
+"Orange Crystallized Emotion (lust)", "solidified lust", 7));
+"Purple Crystallized Emotion (compassion)", "solidified compassion", 7));
+"Pink Crystallized Emotion (happiness)", "solidified happiness", 7));
+"Imperial Gold", "a golden metal with strength that is greater than iron and easily enchanted.", 7));
+
+//lvl 8 items
+l = materialTable.get(5);
+"Red Crystallized Emotion (anger)", "solidified anger", 8));
+"Green Crystallized Emotion (bravery)", "solidified bravery", 8));
+"Mythril", "light metal with high strength; armor will encomber at -1.", 8));
+
+//lvl 9 items
+l = materialTable.get(6);
+"Solid Fire", "Fire that is solid", 9));
+"Cold Fire", "Fire that freezes rather than burns", 9));
+"Liquid Air", "air in a liquid form at room tempurature, can be drunk instead of breathing.", 9));
+"Solid Dust", "weightless earth", 9));
+"Adamantine", "Extremely hard and resistant metal", 9));
+
+//lvl 10 items
+l = materialTable.get(7);
+"Divine Nectar", "liquid consentrate of divinity", 10));

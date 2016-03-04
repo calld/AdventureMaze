@@ -9,50 +9,53 @@ import java.util.Random;
 public class MapGenerator{
 	
 	public static void main(String[] args){
-		Terrain[][] map = new Terrain[17][38];
-		Terrain[][] next_map = new Terrain[17][38]; //same as map
+		Terrain[][][] map = new Terrain[10000][17][38];
+		//Terrain[][] next_map = new Terrain[17][38]; //same as map
 		Terrain[] allTerrains = new Terrain[]{Terrain.MOUNTAIN, Terrain.BADLAND, Terrain.DESERT, 
 										Terrain.PLAIN, Terrain.SWAMP, Terrain.LAKE, Terrain.FOREST};
 		Random ran = new Random();
 		//Initialize
-		init(map);
-		init(next_map);
+		init(map[0]);
+		//init(next_map);
 		//fill
-		for(int i = 1; i < map.length - 1; i++){
-			for(int j = 2; j < map[i].length - 2; j++){
-				map[i][j] = allTerrains[ran.nextInt(allTerrains.length)];
+		for(int i = 1; i < map[0].length - 1; i++){
+			for(int j = 2; j < map[0][i].length - 2; j++){
+				map[0][i][j] = allTerrains[ran.nextInt(allTerrains.length)];
 			}
 		}
 		
 		//simulate
-		for(int k = 0; k < 100; k++){
-			for(int i = 1; i < map.length - 1; i++){
-				for(int j = 2; j < map[i].length - 2; j++){
-					next_map[i][j] = map[i][j].update(new Terrain[]{map[i - (j+1)%2][j-1],
-													map[i - (j+1)%2][j+1],
-													map[i][j-2],
-													map[i][j+2],
-													map[i + j%2][j-1],
-													map[i + j%2][j+1]}, ran);
+		for(int k = 0; k < map.length-1; k++){
+			init(map[k+1]);
+			for(int i = 1; i < map[k].length - 1; i++){
+				for(int j = 2; j < map[k][i].length - 2; j++){
+					map[k+1][i][j] = map[k][i][j].update(new Terrain[]{map[k][i - (j+1)%2][j-1],
+													map[k][i - (j+1)%2][j+1],
+													map[k][i][j-2],
+													map[k][i][j+2],
+													map[k][i + j%2][j-1],
+													map[k][i + j%2][j+1]}, ran);
 				}
 			}
-			map = next_map;
-			next_map = init(new Terrain[17][38]);
 		}
 		
 		//print
 		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < map.length; i++){
-			for(int j = 0; j < map[i].length; j += 2){
-				sb.append(map[i][j].toLetter());
-				sb.append("   ");
+		for(int k = 0; k < map.length; k++){
+			sb.append("map at time: " + k + "\n");
+			for(int i = 0; i < map[k].length; i++){
+				for(int j = 0; j < map[k][i].length; j += 2){
+					sb.append(map[k][i][j].toLetter());
+					sb.append("   ");
+				}
+				sb.append("\n  ");
+				for(int j = 1; j < map[k][i].length; j += 2){
+					sb.append(map[k][i][j].toLetter());
+					sb.append("   ");
+				}
+				sb.append("\n");
 			}
-			sb.append("\n  ");
-			for(int j = 1; j < map[i].length; j += 2){
-				sb.append(map[i][j].toLetter());
-				sb.append("   ");
-			}
-			sb.append("\n");
+			sb.append("\n\n\n\n");
 		}
 		
 		System.out.println(sb.toString());
