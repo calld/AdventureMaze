@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class LocationObj extends ContainerObj implements Location {
-   private Group danger;
+   //private Group danger;
    private List<Group> travelers;
    private HashMap<Direction, Passage> passages;
    private double length;
@@ -20,7 +20,7 @@ public class LocationObj extends ContainerObj implements Location {
 
    protected LocationObj(String name, String desc, double length, double width, Season season){
       super(name, desc, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
-      danger = null;
+      //danger = null;
       travelers = new LinkedList<Group>();
       passages = new HashMap<Direction, Passage>();
       this.length = length;
@@ -55,17 +55,17 @@ public class LocationObj extends ContainerObj implements Location {
       travelers.remove(gr);
    }
 
-   public Group getDanger(){
-      return danger;
-   }
+   //public Group getDanger(){
+      //return danger;
+   //}
 
-   public void setDanger(Group gr){
+   /*public void setDanger(Group gr){
       if(danger != null){
          danger.setLocation(null);
       }
       gr.setLocation(this);
       danger = gr;
-   }
+   }*/
 
    public Faction getFaction(){
       return fac;
@@ -101,11 +101,11 @@ public class LocationObj extends ContainerObj implements Location {
          sb.append(fac.getName());
          sb.append("\n");
       }
-      if(danger != null){
+      /*if(danger != null){
          sb.append("Defended By: ");
          sb.append(danger.getName());
          sb.append("\n");
-      }
+      }*/
       sb.append("Exits:\n\tDirection\tLocation\t\tPassage\n");
       Passage p;
       for(Direction d: Direction.getAllDirections()){
@@ -145,9 +145,9 @@ public class LocationObj extends ContainerObj implements Location {
    private List<String> _dir;
    private List<String> _pas;
 
-   public LocationObj(String name, String desc, List<String> notes, List<String> contents, String len, String wid, String season, List<String> direction, List<String> passage)throws Exception{
+   public LocationObj(String name, String desc, List<String> notes, List<String> contents, String len, String wid, String season, List<String> direction, List<String> passage){
       super(name, desc, notes, contents, Double.toString(Double.POSITIVE_INFINITY), Double.toString(Double.POSITIVE_INFINITY));
-      danger = null;
+      //danger = null;
       travelers = new LinkedList<Group>();
       passages = new HashMap<Direction, Passage>();
 	  _dir = direction;
