@@ -20,7 +20,7 @@ public enum SettlementType{
 		return temp;
 	}
 	
-	public SettlementType update(int pop, int pros, int def){
+	/*public SettlementType update(int pop, int pros, int def){
 		switch (this){
 			case VILLAGE:
 				break;
@@ -28,5 +28,5 @@ public enum SettlementType{
 				return this;
 				break;
 		}
-	}
+	}*/
 }

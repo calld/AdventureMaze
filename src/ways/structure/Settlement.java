@@ -47,7 +47,27 @@ public class Settlement extends ElementObj{
 	}
 	
 	public boolean update(){
+		int[] d = getNetMod();
+		Population p = pop.change(d[0]);
+		Prosperity r = pros.change(d[1]);
+		Defense d = def.change(d[2]);
 		
+		if(p.get() > 2 and r.get() > 1){ //grow
+			switch(type){
+				case VILLAGE:
+					type = SettlementType.TOWN;
+					break;
+				case TOWN:
+					type = SettlementType.CITY;
+					break;
+				default:
+					break;
+			}
+		}else if(p.get() < 2 and r.get() < 2){ // shrink
+			
+		}else if(d.get() > 3 and type == SettlementType.TOWN){ //build in fort
+			
+		}
 	}
 	
 	public void addTag(Stag tag){
@@ -92,6 +112,10 @@ public class Settlement extends ElementObj{
 					return ALL[ALL.length - 1];
 				}
 			}
+		}
+		
+		public int get(){
+			return pos;
 		}
 		
 		public static Prosperity get(int i){
@@ -144,6 +168,10 @@ public class Settlement extends ElementObj{
 					return ALL[ALL.length - 1];
 				}
 			}
+		}
+		
+		public int get(){
+			return pos;
 		}
 
 		public boolean isGreater(Population other){
@@ -202,6 +230,10 @@ public class Settlement extends ElementObj{
 					return ALL[ALL.length - 1];
 				}
 			}
+		}
+		
+		public int get(){
+			return pos;
 		}
 		
 		public static Defense get(int i){
